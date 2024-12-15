@@ -22,7 +22,6 @@ def solution(diffs, times, limit):
     
     while lv_min <= lv_max:
         mid = (lv_min + lv_max) // 2
-        level += 1
         
         if checkLimit(diffs, times, limit, mid):
             answer = mid
