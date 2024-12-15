@@ -6,11 +6,9 @@ def crash_check(path, t):
     for robot_idx in range(len(path)):
         # 해당 로봇이 아직 이동 중인 경우만 체크
         if t < len(path[robot_idx]):
-            current_pos = tuple(path[robot_idx][t])  # 리스트는 딕셔너리 키로 사용할 수 없어서 튜플로 변환
+            current_pos = tuple(path[robot_idx][t])
             
-            # 위치별 로봇 수 카운트
             if current_pos in positions:
-                # 처음으로 2대가 되는 경우에만 카운트 증가
                 if positions[current_pos] == 1:
                     crash_count += 1
                 positions[current_pos] += 1
