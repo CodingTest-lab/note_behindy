@@ -19,9 +19,6 @@ def crash_check(path, t):
                 
     return crash_count
 
-def p_length(point1, point2):
-    return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
-
 def min_path(route, points):
     result = []
     
