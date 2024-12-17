@@ -17,6 +17,14 @@ def find_suspect(expressions):
         
     return max(numbers)+1 if numbers else 0
 
+# 파싱된 수식들을, 조건과 문제로 분리
+def parse_expressions(parsed_expressions):
+    constraints = []
+    problems = []
+    for parsed in parsed_expressions:
+        (problems if parsed[4] == 'X' else constraints).append(parsed)
+    return constraints, problems
+
 # 여러 식들을 판별해서 진법 측정하기
 # 2~9 진법만 가능
 def find_numeral_system(expressions, min_suspect):
@@ -131,8 +139,7 @@ def solution(expressions):
     for expression in expressions:
         parsed_expressions.append(expression.split(' '))
     
-    expressions_constraint = [expression for expression in parsed_expressions if expression[4] != 'X']
-    expressions_problem = [expression for expression in parsed_expressions if expression[4] == 'X']
+    expressions_constraint, expressions_problem = parse_expressions(parsed_expressions)
     
     # 최소 용의자 찾기 , 연산 대상 숫자 중 가장 큰녀석
     sus = find_suspect(parsed_expressions)
