@@ -21,8 +21,11 @@ def find_suspect(expressions):
 def parse_expressions(parsed_expressions):
     constraints = []
     problems = []
+    
+    # 정답 항에 'X'가 존재하는 경우에 proplems 에 넣어버리기
     for parsed in parsed_expressions:
         (problems if parsed[4] == 'X' else constraints).append(parsed)
+        
     return constraints, problems
 
 # 여러 식들을 판별해서 진법 측정하기
