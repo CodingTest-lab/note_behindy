@@ -39,6 +39,16 @@ def find_numeral_system(expressions, min_suspect):
     
     return list(possible_numerals)
 
+# numeral => 10진수로 변환
+def numeral_to_decimal(target, numeral):
+    place = 1
+    answer = 0
+    for digit in target:
+        answer += digit * place
+        place = place * numeral
+    
+    return answer
+
 # 수식과 검증 진수 단위를 입력받아서 수식이 옳게 작성되었는지 확인하기
 def check_numeral(expression, numeral):
     left_side = 0
@@ -53,24 +63,10 @@ def check_numeral(expression, numeral):
         temp_answer = [int(x) for x in expression[4]][::-1]
     else:
         return False
-    
-    # 좌측 10진화
-    place = 1
-    for digit in temp_left:
-        left_side += digit * place
-        place = place * numeral
-    
-    # 우측 10진화
-    place = 1
-    for digit in temp_right:
-        right_side += digit * place
-        place = place * numeral
-        
-    # 정답 10진화
-    place = 1
-    for digit in temp_answer:
-        answer += digit * place
-        place = place * numeral
+
+    left_side = numeral_to_decimal(temp_left, numeral)
+    right_side = numeral_to_decimal(temp_right, numeral)
+    answer = numeral_to_decimal(temp_answer, numeral)
     
     if expression[1] == '+':
         if left_side + right_side == answer:
@@ -81,7 +77,7 @@ def check_numeral(expression, numeral):
             return True
         
     return False
-
+    
 def solve_problem(expression, numerals):
     left_side = 0
     right_side = 0
@@ -96,16 +92,9 @@ def solve_problem(expression, numerals):
         # 좌측 10진화
         left_side = 0
         right_side = 0
-        place = 1
-        for digit in temp_left:
-            left_side += digit * place
-            place = place * numeral
-
-        # 우측 10진화
-        place = 1
-        for digit in temp_right:
-            right_side += digit * place
-            place = place * numeral
+        
+        left_side = numeral_to_decimal(temp_left, numeral)
+        right_side = numeral_to_decimal(temp_right, numeral)
         
         # 10진수 연산 수행
         if expression[1] == '+':
