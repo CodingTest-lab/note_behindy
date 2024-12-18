@@ -24,7 +24,7 @@ def hour_second_count(h, m, s):
     # 주기 = 360/(6-(1/120))
     total_second = get_second(h,m,s)
     
-    count_return = int(total_second * (6 - (1/120)) /360) #+ tip
+    count_return = int(total_second * (6 - (1/120)) / 360) #+ tip
     return count_return
 
 # 00:00:00 부터 제시된 시점까지 minute - second 분침 초침이 만나는경우
@@ -60,7 +60,9 @@ def solution(h1, m1, s1, h2, m2, s2):
     # 12시를 걸치는 경우 보정
     if get_second(h1,m1,s1) < get_second(12,0,0) and get_second(h2,m2,s2) >= get_second(12,0,0):
         result -= 1
-    if get_second(h2,m2,s2) == get_second(23,0, 0):
-        result -= 1
         
+    # 시작과 종료가 모두 정각인 경우 보정
+    if s1 == 0 and m1 == 0 and s2 == 0 and m2 == 0:
+        result -= 1    
+    
     return result
