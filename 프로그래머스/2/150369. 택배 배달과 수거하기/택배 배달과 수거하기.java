@@ -23,7 +23,7 @@ class Solution {
             
             // 왕복 거리 계산
             if (cnt > 0) {
-                answer += (i + 1) * 2L * cnt;
+                answer += (i + 1) * 2 * cnt;
             }
         }
         
