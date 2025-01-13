@@ -24,24 +24,25 @@ class Solution {
         
         // 이름과 인덱스를 저장하기 위한 장치
         HashMap<String, Integer> names = new HashMap<>();
-        for(int i = 0; i < friends.length; i++){
-            names.put(friends[i], i);
+        for(int i = 0; i <friends.length; i++){
+            names.put(friends[i],i);
         }        
         
-        // gifts를 정리해서 이차원 배열로 정리
-        for(int i = 0; i < gifts.length; i++){
+        // gifts 를 정리해서 이차원 배열로 정리해보기
+        for(int i = 0 ; i < gifts.length; i ++){
             String[] temp = gifts[i].split(" ");
-            int from = names.get(temp[0]); // getIndex 대신 HashMap 사용
+            int from = names.get(temp[0]);
             int to = names.get(temp[1]);
-            trades[from][to]++;
-            // 선물 지수 계산
-            presentFactor[from]++;
-            presentFactor[to]--;
+            trades[from][to] ++;   
+            presentFactor[from] ++;
+            presentFactor[to] --;
         }
         
-        // 다음 달에 받을 선물 수 예측
-        for(int i = 0; i < friends.length; i++){
-            for(int j = i + 1; j < friends.length; j++){ // 중복 계산 방지를 위해 i + 1부터
+        // 받을 선물 수 예상 해보기
+        for(int i = 0 ; i < friends.length ; i ++){
+            // 1. 선물 주고받은 기록에 의해서 유추해보기
+            // 반복 회수를 반으로 줄이고 한번에 처리
+            for(int j = i + 1 ; j < trades[i].length; j++){
                 if(trades[i][j] > trades[j][i]){
                     // i가 j에게 더 많이 줌 -> j가 i에게 선물
                     prediction[i]++;
@@ -50,6 +51,7 @@ class Solution {
                     prediction[j]++;
                 } else {
                     // 선물을 주고받지 않았거나 같은 수로 주고받은 경우
+                    // 선물계수 검사
                     if(presentFactor[i] > presentFactor[j]){
                         prediction[i]++;
                     } else if(presentFactor[i] < presentFactor[j]){
@@ -59,7 +61,7 @@ class Solution {
             }
         }
         
-        // 가장 많은 선물을 받을 수 계산
+        // 가장 큰 값 찾기
         for(int count : prediction){
             answer = Math.max(answer, count);
         }
